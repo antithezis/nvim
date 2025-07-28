@@ -35,7 +35,8 @@ vim.keymap.set("n", "<leader>o", function()
   })
 end, { desc = "Buffers" })
 
-vim.keymap.set("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, { desc = "Find Config File" })
+vim.keymap.set("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end,
+  { desc = "Find Config File" })
 vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Find Files" })
 vim.keymap.set("n", "<leader>fg", function() Snacks.picker.git_files() end, { desc = "Find Git Files" })
 vim.keymap.set("n", "<leader>fp", function() Snacks.picker.projects() end, { desc = "Projects" })
@@ -54,7 +55,8 @@ vim.keymap.set("n", "<leader>gf", function() Snacks.picker.git_log_file() end, {
 vim.keymap.set("n", "<leader>sb", function() Snacks.picker.lines() end, { desc = "Buffer Lines" })
 vim.keymap.set("n", "<C-s>", function() Snacks.picker.grep_buffers() end, { desc = "Grep Open Buffers" })
 vim.keymap.set("n", "<leader>st", function() Snacks.picker.grep() end, { desc = "Grep" })
-vim.keymap.set({ "n", "x" }, "<leader>sw", function() Snacks.picker.grep_word() end, { desc = "Visual selection or word" })
+vim.keymap.set({ "n", "x" }, "<leader>sw", function() Snacks.picker.grep_word() end,
+  { desc = "Visual selection or word" })
 
 -- search
 vim.keymap.set("n", "<leader>s\"", function() Snacks.picker.registers() end, { desc = "Registers" })
@@ -86,7 +88,8 @@ vim.keymap.set("n", "gr", function() Snacks.picker.lsp_references() end, { nowai
 vim.keymap.set("n", "gI", function() Snacks.picker.lsp_implementations() end, { desc = "Goto Implementation" })
 vim.keymap.set("n", "gy", function() Snacks.picker.lsp_type_definitions() end, { desc = "Goto T[y]pe Definition" })
 vim.keymap.set("n", "<leader>p", function() Snacks.picker.lsp_symbols() end, { desc = "LSP Symbols" })
-vim.keymap.set("n", "<leader>WS", function() Snacks.picker.lsp_workspace_symbols() end, { desc = "LSP Workspace Symbols" })
+vim.keymap.set("n", "<leader>WS", function() Snacks.picker.lsp_workspace_symbols() end,
+  { desc = "LSP Workspace Symbols" })
 
 -- Other
 vim.keymap.set("n", "<leader>z", function() Snacks.zen() end, { desc = "Toggle Zen Mode" })
@@ -117,3 +120,44 @@ vim.keymap.set("n", "<leader>N", function()
     },
   })
 end, { desc = "Neovim News" })
+
+-- UFO
+vim.keymap.set('n', 'zR', function() require('ufo').openAllFolds() end, { desc = 'UFO: Open all folds' })
+vim.keymap.set('n', 'zM', function() require('ufo').closeAllFolds() end, { desc = 'UFO: Close all folds' })
+vim.keymap.set('n', 'K', function()
+  local winid = require('ufo').peekFoldedLinesUnderCursor()
+  if not winid then vim.lsp.buf.hover() end
+end, { desc = 'UFO: Peek fold or hover' })
+
+-- which-key
+vim.keymap.set('n', '<leader>?', function() require("which-key").show({ global = false }) end,
+  { desc = "Buffer Local Keymaps (which-key)" })
+
+-- Spectre
+vim.keymap.set('n', '<leader>Rr', function() require("spectre").open() end, { desc = "Replace" })
+vim.keymap.set('n', '<leader>Rw', function() require("spectre").open_visual({ select_word = true }) end,
+  { desc = "Replace Word" })
+vim.keymap.set('n', '<leader>Rf', function() require("spectre").open_file_search() end, { desc = "Replace Buffer" })
+
+-- Flash
+vim.keymap.set({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })
+vim.keymap.set({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
+vim.keymap.set("o", "r", function() require("flash").remote() end, { desc = "Remote Flash" })
+vim.keymap.set({ "o", "x" }, "R", function() require("flash").treesitter_search() end, { desc = "Treesitter Search" })
+vim.keymap.set("c", "<c-s>", function() require("flash").toggle() end, { desc = "Toggle Flash Search" })
+
+-- Showkeys
+vim.keymap.set('n', '<leader>ut', function() vim.cmd("ShowkeysToggle") end, { desc = "Show key presses" })
+
+-- Trouble
+vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
+vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+  { desc = 'Buffer Diagnostics (Trouble)' })
+vim.keymap.set('n', '<leader>cs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = 'Symbols (Trouble)' })
+vim.keymap.set('n', '<leader>cl', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+  { desc = 'LSP Definitions / references / ... (Trouble)' })
+vim.keymap.set('n', '<leader>xL', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location List (Trouble)' })
+vim.keymap.set('n', '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix List (Trouble)' })
+
+-- Mason
+vim.keymap.set('n', '<leader>cm', '<cmd>Mason<cr>', { desc = 'Mason' })

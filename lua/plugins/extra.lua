@@ -41,29 +41,6 @@ return {
     "windwp/nvim-spectre",
     enabled = true,
     event = "BufRead",
-    keys = {
-      {
-        "<leader>Rr",
-        function()
-          require("spectre").open()
-        end,
-        desc = "Replace",
-      },
-      {
-        "<leader>Rw",
-        function()
-          require("spectre").open_visual({ select_word = true })
-        end,
-        desc = "Replace Word",
-      },
-      {
-        "<leader>Rf",
-        function()
-          require("spectre").open_file_search()
-        end,
-        desc = "Replace Buffer",
-      },
-    },
   },
 
   -- Heuristically set buffer options
@@ -114,47 +91,8 @@ return {
     ---@type Flash.Config
     opts = {},
     -- stylua: ignore
-    keys = {
-      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
-    },
   },
 
-  -- {
-  --   "utilyre/barbecue.nvim",
-  --   name = "barbecue",
-  --   version = "*",
-  --   dependencies = {
-  --     "SmiteshP/nvim-navic",
-  --     "nvim-tree/nvim-web-devicons", -- optional dependency
-  --   },
-  --   opts = {
-  --     -- configurations go here
-  --   },
-  --   config = function()
-  --     require("barbecue").setup({
-  --       create_autocmd = false, -- prevent barbecue from updating itself automatically
-  --     })
-  --
-  --     vim.api.nvim_create_autocmd({
-  --       "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
-  --       "BufWinEnter",
-  --       "CursorHold",
-  --       "InsertLeave",
-  --
-  --       -- include this if you have set `show_modified` to `true`
-  --       -- "BufModifiedSet",
-  --     }, {
-  --       group = vim.api.nvim_create_augroup("barbecue.updater", {}),
-  --       callback = function()
-  --         require("barbecue.ui").update()
-  --       end,
-  --     })
-  --   end,
-  -- },
   -- persist sessions
   {
     "folke/persistence.nvim",
@@ -202,16 +140,6 @@ return {
       -- bottom-left, bottom-right, bottom-center, top-left, top-right, top-center
       position = "bottom-right",
     },
-
-    keys = {
-      {
-        "<leader>ut",
-        function()
-          vim.cmd("ShowkeysToggle")
-        end,
-        desc = "Show key presses",
-      },
-    },
   },
   {
     "folke/noice.nvim",
@@ -230,5 +158,11 @@ return {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     }
+  },
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
   }
+
 }

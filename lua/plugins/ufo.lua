@@ -2,29 +2,7 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     event = 'LspAttach',
-    keys = {
-      {
-        'zR',
-        function()
-          require('ufo').openAllFolds()
-        end,
-      },
-      {
-        'zM',
-        function()
-          require('ufo').closeAllFolds()
-        end,
-      },
-      {
-        'K',
-        function()
-          local winid = require('ufo').peekFoldedLinesUnderCursor()
-          if not winid then
-            vim.lsp.buf.hover()
-          end
-        end,
-      },
-    },
+    -- keys migrated to lua/config/keymaps.lua
     dependencies = {
       { 'kevinhwang91/promise-async' },
       {

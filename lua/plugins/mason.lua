@@ -4,7 +4,6 @@ return {
         -- lazy = false, -- Load immediately to ensure PATH is set
         event = { "BufReadPre", "BufNewFile" },
         cmd = "Mason",
-        keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
         build = ":MasonUpdate",
         opts = {
             ensure_installed = {
