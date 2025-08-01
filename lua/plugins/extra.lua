@@ -110,7 +110,7 @@ return {
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [']quote
       --  - ci'  - [C]hange [I]nside [']quote
-      require("mini.ai").setup({ n_lines = 500 })
+      -- require("mini.ai").setup({ n_lines = 500 })
 
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
@@ -119,16 +119,82 @@ return {
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require("mini.surround").setup()
 
-      require("mini.pairs").setup()
-
-      -- local statusline = require("mini.statusline")
-      -- statusline.setup({
-      --   use_icons = vim.g.have_nerd_font,
-      -- })
-      -- ---@diagnostic disable-next-line: duplicate-set-field
-      -- statusline.section_location = function()
-      --   return "%2l:%-2v"
-      -- end
+      require("mini.pairs").setup({
+        modes = { insert = true, command = false, terminal = false },
+        -- Global mappings. Each right hand side should be a pair information, a
+        -- table with at least these fields (see more in |MiniPairs.map|):
+        -- - <action> - one of 'open', 'close', 'closeopen'.
+        -- - <pair> - two character string for pair to be used.
+        -- By default pair is not inserted after `\`, quotes are not recognized by
+        -- `<CR>`, `'` does not insert pair after a letter.
+        -- Only parts of tables can be tweaked (others will use these defaults).
+        mappings = {
+          [")"] = { action = "close", pair = "()", neigh_pattern = "[^\\]." },
+          ["]"] = { action = "close", pair = "[]", neigh_pattern = "[^\\]." },
+          ["}"] = { action = "close", pair = "{}", neigh_pattern = "[^\\]." },
+          ["["] = {
+            action = "open",
+            pair = "[]",
+            neigh_pattern = ".[%s%z%)}%]]",
+            register = { cr = false },
+            -- foo|bar -> press "[" -> foo[bar
+            -- foobar| -> press "[" -> foobar[]
+            -- |foobar -> press "[" -> [foobar
+            -- | foobar -> press "[" -> [] foobar
+            -- foobar | -> press "[" -> foobar []
+            -- {|} -> press "[" -> {[]}
+            -- (|) -> press "[" -> ([])
+            -- [|] -> press "[" -> [[]]
+          },
+          ["{"] = {
+            action = "open",
+            pair = "{}",
+            -- neigh_pattern = ".[%s%z%)}]",
+            neigh_pattern = ".[%s%z%)}%]]",
+            register = { cr = false },
+            -- foo|bar -> press "{" -> foo{bar
+            -- foobar| -> press "{" -> foobar{}
+            -- |foobar -> press "{" -> {foobar
+            -- | foobar -> press "{" -> {} foobar
+            -- foobar | -> press "{" -> foobar {}
+            -- (|) -> press "{" -> ({})
+            -- {|} -> press "{" -> {{}}
+          },
+          ["("] = {
+            action = "open",
+            pair = "()",
+            -- neigh_pattern = ".[%s%z]",
+            neigh_pattern = ".[%s%z%)]",
+            register = { cr = false },
+            -- foo|bar -> press "(" -> foo(bar
+            -- foobar| -> press "(" -> foobar()
+            -- |foobar -> press "(" -> (foobar
+            -- | foobar -> press "(" -> () foobar
+            -- foobar | -> press "(" -> foobar ()
+          },
+          -- Single quote: Prevent pairing if either side is a letter
+          ['"'] = {
+            action = "closeopen",
+            pair = '""',
+            neigh_pattern = "[^%w\\][^%w]",
+            register = { cr = false },
+          },
+          -- Single quote: Prevent pairing if either side is a letter
+          ["'"] = {
+            action = "closeopen",
+            pair = "''",
+            neigh_pattern = "[^%w\\][^%w]",
+            register = { cr = false },
+          },
+          -- Backtick: Prevent pairing if either side is a letter
+          ["`"] = {
+            action = "closeopen",
+            pair = "``",
+            neigh_pattern = "[^%w\\][^%w]",
+            register = { cr = false },
+          },
+        },
+      })
     end,
   },
   {
@@ -141,28 +207,54 @@ return {
       position = "bottom-right",
     },
   },
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      cmdline = {
-        enabled = true,
-        view = "cmdline"
-      },
-      presets = {
-        bottom_search = true,
-        command_palette = false,
-      },
-    },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    }
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     cmdline = {
+  --       enabled = true,
+  --       view = "cmdline"
+  --     },
+  --     presets = {
+  --       lsp_doc_border = false,
+  --       bottom_search = false,
+  --       command_palette = false,
+  --     },
+  --     lsp = {
+  --       ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+  --       ["vim.lsp.util.stylize_markdown"] = false,
+  --       ["cmp.entry.get_documentation"] = false,
+  --     },
+  --     hover = {
+  --       enabled = false,
+  --     },
+  --     signature = {
+  --       enabled = false,
+  --       auto_open = {
+  --         enabled = false
+  --       }
+  --     }
+  --
+  --   },
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   }
+  -- },
   {
     "folke/trouble.nvim",
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
+  },
+  {
+    "smjonas/live-command.nvim",
+    config = function()
+      require("live-command").setup({
+        commands = {
+          Norm = { cmd = "norm" },
+        },
+      })
+    end,
   }
 
 }

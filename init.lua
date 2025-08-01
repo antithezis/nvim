@@ -3,10 +3,14 @@ vim.g.maplocalleader = ' '
 
 vim.g.have_nerd_font = true
 
-require("core.lazy")
-require("core.lsp")
+require "core.lazy"
+require "core.lsp"
 
-require("config.options")
-require("config.autocmds")
-require("config.keymaps")
+require "config.options"
+require "config.autocmds"
+require "config.keymaps"
+
+
+require "config.marks"
+require "utils.float-terminal"
 

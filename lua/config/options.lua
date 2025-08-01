@@ -68,5 +68,5 @@ vim.opt.termguicolors = true
 -- Set statusline to be global
 vim.opt.laststatus = 3
 
-vim.opt.winborder = "single"      -- https://neovim.io/doc/user/options.html#'winborder'
+vim.opt.winborder = "rounded"      -- https://neovim.io/doc/user/options.html#'winborder'
 

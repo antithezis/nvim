@@ -11,7 +11,7 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
 vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("v", "<C-c>", "<Esc>")
 
--- Snacks keymaps converted to vim.keymap.set(...)
+-- Snacks
 
 -- Top Pickers & Explorer
 vim.keymap.set("n", "<leader><space>", function() Snacks.picker.smart() end, { desc = "Smart Find Files" })
