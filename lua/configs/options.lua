@@ -1,8 +1,5 @@
 vim.g.mapleader = " "
 
--- Disable command line
--- vim.opt.cmdheight = 0
-
 -- Make line numbers default
 vim.opt.number = true
 

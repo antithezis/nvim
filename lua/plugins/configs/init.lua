@@ -8,6 +8,7 @@ require "plugins.configs.tiny-inline-diagnostics"
 require "plugins.configs.nvim-treesitter"
 require "plugins.configs.lualine"
 require "plugins.configs.rose-pine"
+require "plugins.configs.which-key"
 
 require "fidget".setup({})
 require "dressing".setup()

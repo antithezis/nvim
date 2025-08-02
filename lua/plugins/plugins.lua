@@ -24,6 +24,8 @@ vim.pack.add({
     { src = "https://github.com/MunifTanjim/nui.nvim" },
     { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
+    { src = "https://github.com/folke/which-key.nvim" },
+    { src = "https://github.com/lewis6991/gitsigns.nvim" },
 
     -- Utils
     { src = "https://github.com/folke/snacks.nvim" },
@@ -33,7 +35,6 @@ vim.pack.add({
     { src = "https://github.com/vague2k/vague.nvim" },
     { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
 })
-
 
 require "plugins.float-terminal"
 require "plugins.marks"

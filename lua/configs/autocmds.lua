@@ -2,19 +2,8 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
-local fn = vim.fn
 local lsp = vim.lsp
 local autocmd = vim.api.nvim_create_autocmd
-
-autocmd('LspAttach', {
-    callback = function(ev)
-        local client = lsp.get_client_by_id(ev.data.client_id)
-        if client:supports_method('textDocument/completion') then
-            lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-        end
-    end,
-})
-
 
 autocmd("TextYankPost", {
     group = augroup("highlight_yank"),
@@ -58,7 +47,14 @@ vim.on_key(function(char)
     end
 end, vim.api.nvim_create_namespace "auto_hlsearch")
 
-
+autocmd('LspAttach', {
+    callback = function(ev)
+        local client = lsp.get_client_by_id(ev.data.client_id)
+        if client:supports_method('textDocument/completion') then
+            lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+        end
+    end,
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
@@ -66,7 +62,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local map = function(keys, func, desc)
             vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
         end
-
 
         map("gl", vim.diagnostic.open_float, "Open Diagnostic Float")
         map("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -94,11 +89,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
             },
         })
 
-        local function supports_method(client, method, bufnr)
+        local function client_supports_method(client, method, bufnr)
             if vim.fn.has 'nvim-0.11' == 1 then
                 return client:supports_method(method, bufnr)
             else
-                return client.supports_method(method, { bufnr = bufnr })
+                return client:supports_method(method, { bufnr = bufnr })
             end
         end
 
