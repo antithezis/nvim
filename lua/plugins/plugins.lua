@@ -11,7 +11,7 @@ vim.pack.add({
     -- CMPs
     { src = "https://github.com/rafamadriz/friendly-snippets" },
     { src = "https://github.com/L3MON4D3/LuaSnip" },
-    { src = "https://github.com/saghen/blink.cmp", version = "*" },
+    { src = "https://github.com/saghen/blink.cmp", version = "v1.6.0"}, -- Or 'vim.version.range('1.6.0')'
 
     -- Ufo
     { src = "https://github.com/kevinhwang91/nvim-ufo" },
@@ -23,6 +23,7 @@ vim.pack.add({
     { src = "https://github.com/stevearc/dressing.nvim" },
     { src = "https://github.com/MunifTanjim/nui.nvim" },
     { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
+    { src = "https://github.com/nvim-lualine/lualine.nvim" },
 
     -- Utils
     { src = "https://github.com/folke/snacks.nvim" },
@@ -30,4 +31,9 @@ vim.pack.add({
 
     -- Themes
     { src = "https://github.com/vague2k/vague.nvim" },
+    { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
 })
+
+
+require "plugins.float-terminal"
+require "plugins.marks"

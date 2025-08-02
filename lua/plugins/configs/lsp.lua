@@ -18,6 +18,7 @@ local opts = {
 
 require('mason').setup(opts)
 -- require('mason-lspconfig').setup()
+
 local mr = require("mason-registry")
 
 local function ensure_installed()
@@ -46,7 +47,7 @@ else
     ensure_installed()
 end
 
-local capabilities = require "blink.cmp".get_lsp_capabilities()
--- require "lspconfig".lua_ls.setup { capabilities = capabilities }
+-- local capabilities = require "blink.cmp".get_lsp_capabilities()
+-- require "lspconfig".lua_ls.setup{}
 
 require "core.lsp"

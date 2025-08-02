@@ -1,55 +1,61 @@
+local function augroup(name)
+  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+end
+
 local fn = vim.fn
 local lsp = vim.lsp
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd('LspAttach', {
-	callback = function(ev)
-		local client = lsp.get_client_by_id(ev.data.client_id)
-		if client:supports_method('textDocument/completion') then
-			lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-		end
-	end,
+    callback = function(ev)
+        local client = lsp.get_client_by_id(ev.data.client_id)
+        if client:supports_method('textDocument/completion') then
+            lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+        end
+    end,
 })
 
+
 autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+    group = augroup("highlight_yank"),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
 autocmd("FileType", {
-  pattern = {
-    "qf",
-    "oil",
-    "help",
-    "dbout",
-    "notify",
-    "lspinfo",
-    "startuptime",
-    "checkhealth",
-    "tsplayground",
-    "spectre_panel",
-    "neotest-output",
-    "gitsigns.blame",
-    "neotest-summary",
-    "PlenaryTestPopup",
-    "neotest-output-panel",
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", {
-      buffer = event.buf,
-      silent = true,
-      desc = "Quit buffer",
-    })
-  end,
+    pattern = {
+        "qf",
+        "oil",
+        "help",
+        "dbout",
+        "notify",
+        "lspinfo",
+        "startuptime",
+        "checkhealth",
+        "tsplayground",
+        "spectre_panel",
+        "neotest-output",
+        "gitsigns.blame",
+        "neotest-summary",
+        "PlenaryTestPopup",
+        "neotest-output-panel",
+    },
+    callback = function(event)
+        vim.bo[event.buf].buflisted = false
+        vim.keymap.set("n", "q", "<cmd>close<cr>", {
+            buffer = event.buf,
+            silent = true,
+            desc = "Quit buffer",
+        })
+    end,
 })
 
 vim.on_key(function(char)
-  if vim.fn.mode() == "n" then
-    local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/", "z" }, vim.fn.keytrans(char))
-    if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
-  end
+    if vim.fn.mode() == "n" then
+        local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/", "z" }, vim.fn.keytrans(char))
+        if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
+    end
 end, vim.api.nvim_create_namespace "auto_hlsearch")
 
 
@@ -71,14 +77,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         local wk = require("which-key")
         wk.add({
-            { "<leader>la", vim.lsp.buf.code_action,                           desc = "Code Action" },
-            { "<leader>lA", vim.lsp.buf.range_code_action,                     desc = "Range Code Actions" },
-            { "<leader>ls", vim.lsp.buf.signature_help,                        desc = "Display Signature Information" },
-            { "<leader>lr", vim.lsp.buf.rename,                                desc = "Rename all references" },
-            { "<leader>lf", vim.lsp.buf.format,                                desc = "Format" },
+            { "<leader>la", vim.lsp.buf.code_action,             desc = "Code Action" },
+            { "<leader>lA", vim.lsp.buf.range_code_action,       desc = "Range Code Actions" },
+            { "<leader>ls", vim.lsp.buf.signature_help,          desc = "Display Signature Information" },
+            { "<leader>lr", vim.lsp.buf.rename,                  desc = "Rename all references" },
+            { "<leader>lf", vim.lsp.buf.format,                  desc = "Format" },
             -- { "<leader>lc", require("config.utils").copyFilePathAndLineNumber, desc = "Copy File Path and Line Number" },
-            { "<leader>Wa", vim.lsp.buf.add_workspace_folder,                  desc = "Workspace Add Folder" },
-            { "<leader>Wr", vim.lsp.buf.remove_workspace_folder,               desc = "Workspace Remove Folder" },
+            { "<leader>Wa", vim.lsp.buf.add_workspace_folder,    desc = "Workspace Add Folder" },
+            { "<leader>Wr", vim.lsp.buf.remove_workspace_folder, desc = "Workspace Remove Folder" },
             {
                 "<leader>Wl",
                 function()
@@ -135,4 +141,3 @@ vim.api.nvim_create_autocmd("FileType", {
         pcall(vim.treesitter.start)
     end,
 })
-
