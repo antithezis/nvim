@@ -50,4 +50,4 @@ end
 -- local capabilities = require "blink.cmp".get_lsp_capabilities()
 -- require "lspconfig".lua_ls.setup{}
 
-require "core.lsp"
+require "lua.utils.lsp_configs"

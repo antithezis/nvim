@@ -33,7 +33,7 @@ require("rose-pine").setup({
     },
 
     highlight_groups = (function()
-        local highlight_overrides = require("configs.highlight_overrides")
+        local highlight_overrides = require("lua.utils.highlight_overrides")
         return vim.tbl_deep_extend("force",
             highlight_overrides.common {
                 base = "base", text = "text", surface = "surface", muted = "muted", subtle = "subtle", rose = "rose", foam = "foam", gold = "gold", love = "love"

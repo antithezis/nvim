@@ -15,3 +15,4 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
 vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("v", "<C-c>", "<Esc>")
 
+vim.keymap.set('n', '<leader>e', ":Oil<CR>")

@@ -1,4 +1,4 @@
-require('configs.lualine-theme').apply_highlights()
+require('lua.utils.lualine-theme').apply_highlights()
 
 local conditions = {
     buffer_not_empty = function()
@@ -64,7 +64,7 @@ ins_left {
     end,
     color = function()
         local dynamic_colors =
-            require('configs.lualine-theme').build_theme()
+            require('lua.utils.lualine-theme').build_theme()
         -- auto change color according to neovims mode
         local mode_color = {
             n = dynamic_colors.red,
