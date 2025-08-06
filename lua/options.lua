@@ -69,7 +69,7 @@ vim.opt.laststatus = 3
 
 vim.opt.winborder = "rounded"      -- https://neovim.io/doc/user/options.html#'winborder'
 
-vim.opt.expandtab = true      -- Convierte tabs en espacios
-vim.opt.shiftwidth = 4       -- Número de espacios por nivel de indentación
-vim.opt.tabstop = 4          -- Número de espacios que representa un tab literal
-vim.opt.softtabstop = 4      -- Número de espacios insertados cuando presionas Tab
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2

@@ -1,7 +1,6 @@
 require "configs.ufo"
 require "configs.mini"
 require "configs.snacks"
-require "configs.ufo"
 require "configs.lsp"
 require "configs.blink"
 require "configs.tiny-inline-diagnostics"
@@ -10,6 +9,7 @@ require "configs.lualine"
 require "configs.rose-pine"
 require "configs.which-key"
 
+require "oil".setup()
 require "fidget".setup({})
 require "dressing".setup()
 

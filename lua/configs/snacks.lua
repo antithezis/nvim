@@ -1,30 +1,61 @@
 local vim = vim
 local snacks = require "snacks"
+
 snacks.setup({
-    bigfile = { enabled = true },
-    explorer = { enabled = true },
-    indent = { enabled = false },
-    input = { enabled = true },
-    notifier = {
-        enabled = true,
-        timeout = 3000,
+  dashboard = {
+    enabled = true,
+    sections = {
+      { section = "header" },
+      {
+        pane = 2,
+        section = "terminal",
+        cmd = "colorscript -e square",
+        height = 5,
+        padding = 1,
+      },
+      { section = "keys", gap = 1, padding = 1 },
+      { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+      { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+      {
+        pane = 2,
+        icon = " ",
+        title = "Git Status",
+        section = "terminal",
+        enabled = function()
+          return Snacks.git.get_root() ~= nil
+        end,
+        cmd = "git status --short --branch --renames",
+        height = 5,
+        padding = 1,
+        ttl = 5 * 60,
+        indent = 3,
+      },
     },
-    picker = {
-        enabled = true,
-        sources = {
-            files = { hidden = true },
-        },
+  },
+  bigfile = { enabled = true },
+  explorer = { enabled = true },
+  indent = { enabled = false },
+  input = { enabled = true },
+  notifier = {
+    enabled = true,
+    timeout = 3000,
+  },
+  picker = {
+    enabled = true,
+    sources = {
+      files = { hidden = true },
     },
-    quickfile = { enabled = true },
-    scope = { enabled = true },
-    scroll = { enabled = false },
-    statuscolumn = { enabled = true },
-    words = { enabled = true },
-    styles = {
-        notification = {
-            -- wo = { wrap = true } -- Wrap notifications
-        },
+  },
+  quickfile = { enabled = true },
+  scope = { enabled = true },
+  scroll = { enabled = false },
+  statuscolumn = { enabled = true },
+  words = { enabled = true },
+  styles = {
+    notification = {
+      -- wo = { wrap = true } -- Wrap notifications
     },
+  },
 })
 
 -- Top Pickers & Explorer
@@ -50,7 +81,8 @@ vim.keymap.set("n", "<leader>o", function()
   })
 end, { desc = "Buffers" })
 
-vim.keymap.set("n", "<leader>fc", function() snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, { desc = "Find Config File" })
+vim.keymap.set("n", "<leader>fc", function() snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end,
+  { desc = "Find Config File" })
 vim.keymap.set("n", "<leader>ff", function() snacks.picker.files() end, { desc = "Find Files" })
 vim.keymap.set("n", "<leader>fg", function() snacks.picker.git_files() end, { desc = "Find Git Files" })
 vim.keymap.set("n", "<leader>fp", function() snacks.picker.projects() end, { desc = "Projects" })
@@ -69,7 +101,8 @@ vim.keymap.set("n", "<leader>gf", function() snacks.picker.git_log_file() end, {
 vim.keymap.set("n", "<leader>sb", function() snacks.picker.lines() end, { desc = "Buffer Lines" })
 vim.keymap.set("n", "<C-s>", function() snacks.picker.grep_buffers() end, { desc = "Grep Open Buffers" })
 vim.keymap.set("n", "<leader>st", function() snacks.picker.grep() end, { desc = "Grep" })
-vim.keymap.set({ "n", "x" }, "<leader>sw", function() snacks.picker.grep_word() end, { desc = "Visual selection or word" })
+vim.keymap.set({ "n", "x" }, "<leader>sw", function() snacks.picker.grep_word() end,
+  { desc = "Visual selection or word" })
 
 -- search
 vim.keymap.set("n", "<leader>s\"", function() snacks.picker.registers() end, { desc = "Registers" })
@@ -101,7 +134,8 @@ vim.keymap.set("n", "gr", function() snacks.picker.lsp_references() end, { nowai
 vim.keymap.set("n", "gI", function() snacks.picker.lsp_implementations() end, { desc = "Goto Implementation" })
 vim.keymap.set("n", "gy", function() snacks.picker.lsp_type_definitions() end, { desc = "Goto T[y]pe Definition" })
 vim.keymap.set("n", "<leader>p", function() snacks.picker.lsp_symbols() end, { desc = "LSP Symbols" })
-vim.keymap.set("n", "<leader>WS", function() snacks.picker.lsp_workspace_symbols() end, { desc = "LSP Workspace Symbols" })
+vim.keymap.set("n", "<leader>WS", function() snacks.picker.lsp_workspace_symbols() end,
+  { desc = "LSP Workspace Symbols" })
 
 -- Other
 vim.keymap.set("n", "<leader>z", function() snacks.zen() end, { desc = "Toggle Zen Mode" })

@@ -47,14 +47,14 @@ vim.on_key(function(char)
     end
 end, vim.api.nvim_create_namespace "auto_hlsearch")
 
-autocmd('LspAttach', {
-    callback = function(ev)
-        local client = lsp.get_client_by_id(ev.data.client_id)
-        if client:supports_method('textDocument/completion') then
-            lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-        end
-    end,
-})
+-- autocmd('LspAttach', {
+--     callback = function(ev)
+--         local client = lsp.get_client_by_id(ev.data.client_id)
+--         if client:supports_method('textDocument/completion') then
+--             lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+--         end
+--     end,
+-- })
 
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
