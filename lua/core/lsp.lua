@@ -6,7 +6,8 @@ vim.lsp.enable({
     "html-ls",
     "css-ls",
     "vue-ls",
-    "angular-ls"
+    "angular-ls",
+    "csharp-ls"
 })
 
 -- LSP servers are automatically managed by Mason
