@@ -9,7 +9,17 @@ return {
             "nvim-treesitter/nvim-treesitter-context"
         },
         config = function()
-            require("nvim-treesitter.configs").setup({
+            require("treesitter-context").setup({
+                enable = true,
+                max_lines = 4,
+                min_window_height = 0,
+                patterns = {
+                    default = {
+                        "class", "function", "method", "for", "while", "if", "switch",
+                    },
+                },
+            })
+            require("nvim-treesitter.config").setup({
                 sync_install = false,
                 modules = {},
                 highlight = {
@@ -108,16 +118,6 @@ return {
                         swap_previous = {
                             ["<leader>A"] = "@parameter.inner",
                         },
-                    },
-                },
-            })
-            require("treesitter-context").setup({
-                enable = true,
-                max_lines = 4,
-                min_window_height = 0,
-                patterns = {
-                    default = {
-                        "class", "function", "method", "for", "while", "if", "switch",
                     },
                 },
             })
