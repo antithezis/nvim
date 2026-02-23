@@ -1,21 +1,27 @@
----@brief
----
---- https://github.com/razzmatazz/csharp-language-server
----
---- Language Server for C#.
----
---- csharp-ls requires the [dotnet-sdk](https://dotnet.microsoft.com/download) to be installed.
----
---- The preferred way to install csharp-ls is with `dotnet tool install --global csharp-ls`.
+-- csharp-language-server configuration
+-- https://github.com/razzmatazz/csharp-language-server
 
-local util = require 'utils.lspconfig-util'
+-- Helper function to find root pattern
+local function root_pattern(...)
+  local patterns = { ... }
+  return function(startpath)
+    for _, pattern in ipairs(patterns) do
+      local match = vim.fs.find(pattern, {
+        path = startpath,
+        upward = true,
+        type = "file",
+      })[1]
+      if match then
+        return vim.fs.dirname(match)
+      end
+    end
+    return nil
+  end
+end
 
----@type vim.lsp.Config
 return {
   cmd = function(dispatchers, config)
-    return vim.lsp.rpc.start({ 'csharp-ls' }, dispatchers, {
-      -- csharp-ls attempt to locate sln, slnx or csproj files from cwd, so set cwd to root directory.
-      -- If cmd_cwd is provided, use it instead.
+    return vim.lsp.rpc.start({ "csharp-ls" }, dispatchers, {
       cwd = config.cmd_cwd or config.root_dir,
       env = config.cmd_env,
       detached = config.detached,
@@ -23,9 +29,12 @@ return {
   end,
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
-    on_dir(util.root_pattern '*.sln'(fname) or util.root_pattern '*.slnx'(fname) or util.root_pattern '*.csproj'(fname))
+    local root = root_pattern("*.sln")(fname)
+      or root_pattern("*.slnx")(fname)
+      or root_pattern("*.csproj")(fname)
+    on_dir(root)
   end,
-  filetypes = { 'cs' },
+  filetypes = { "cs" },
   init_options = {
     AutomaticWorkspaceInit = true,
   },
